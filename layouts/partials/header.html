@@ -3,11 +3,28 @@
         <ul class="text-center list-none text-white text-3xl">
             {{ range .Site.Menus.main }}
             <li class="p-2">
-                <a href="{{ .URL | safeURL }}">
+                <a href="{{ urls.RelLangURL .URL | safeURL }}">
                     <span>{{ .Name }}</span>
                 </a>
             </li>
             {{ end }}
+            <!-- language switcher part -->
+            <div class="text-lg">
+                <ul>
+                    {{ range .Site.Languages }}
+                    {{ if eq . $.Site.Language }}
+                    <li><span aria-label="{{ i18n "ariaLanguage" }}{{ .LanguageName }}">{{ .LanguageName }}</span>
+                        {{ end }}
+                        {{ end }}
+                        <ul aria-labelledby="dropdown-title">
+                        {{ range $.Translations }}
+                        <li><a title="{{ .Language.LanguageName }}" href="{{ .Permalink }}" aria-label="{{ i18n "ariaTranslation" }}{{ .Language.LanguageName }}">{{ .Language.LanguageName }}</a></li>
+                        </ul>
+                        {{ end }}
+                    </li>
+                </ul>
+            </div>
+            <!-- end language switcher part -->
         </ul>
     </div>
     <nav class="flex items-center justify-between flex-wrap bg-opacity-100 p-8">
@@ -33,21 +50,24 @@
                 </a>
                 {{ end }}
             </div>
+            <!-- language switcher part -->
+            <div class="text-lg">
+                <ul>
+                    {{ range .Site.Languages }}
+                    {{ if eq . $.Site.Language }}
+                    <li><span aria-label="{{ i18n "ariaLanguage" }}{{ .LanguageName }}">{{ .LanguageName }}</span>
+                      {{ end }}
+                      {{ end }}
+                      <ul aria-labelledby="dropdown-title">
+                        {{ range $.Translations }}
+                        <li><a title="{{ .Language.LanguageName }}" href="{{ .Permalink }}" aria-label="{{ i18n "ariaTranslation" }}{{ .Language.LanguageName }}">{{ .Language.LanguageName }}</a></li>
+                      </ul>
+                        {{ end }}
+                    </li>
+                  </ul>
+            </div>
+            <!-- end language switcher part -->
         </div>
-        <!-- language switcher part -->
-        <ul>
-            {{ range .Site.Languages }}
-            {{ if eq . $.Site.Language }}
-            <li><span aria-label="{{ i18n "ariaLanguage" }}{{ .LanguageName }}">{{ .LanguageName }}</span>
-              {{ end }}
-              {{ end }}
-              <ul aria-labelledby="dropdown-title">
-                {{ range $.Translations }}
-                <li><a title="{{ .Language.LanguageName }}" href="{{ .Permalink }}" aria-label="{{ i18n "ariaTranslation" }}{{ .Language.LanguageName }}">{{ .Language.LanguageName }}</a></li>
-              </ul>
-                {{ end }}
-            </li>
-          </ul>
-        <!-- end language switcher part -->
+
     </nav>
 </header>
