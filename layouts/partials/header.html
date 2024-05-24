@@ -27,12 +27,27 @@
             </div>
             <div class="text-lg">
                 {{ range .Site.Menus.main }}
-                <a href="{{ .URL | safeURL }}"
+                <a href="{{ urls.RelLangURL .URL | safeURL }}"
                     class="duration-200 block mt-4 lg:inline-block lg:mt-0 text-black hover:opacity-60 mr-8">
                     {{ .Name }}
                 </a>
                 {{ end }}
             </div>
         </div>
+        <!-- language switcher part -->
+        <ul>
+            {{ range .Site.Languages }}
+            {{ if eq . $.Site.Language }}
+            <li><span aria-label="{{ i18n "ariaLanguage" }}{{ .LanguageName }}">{{ .LanguageName }}</span>
+              {{ end }}
+              {{ end }}
+              <ul aria-labelledby="dropdown-title">
+                {{ range $.Translations }}
+                <li><a title="{{ .Language.LanguageName }}" href="{{ .Permalink }}" aria-label="{{ i18n "ariaTranslation" }}{{ .Language.LanguageName }}">{{ .Language.LanguageName }}</a></li>
+              </ul>
+                {{ end }}
+            </li>
+          </ul>
+        <!-- end language switcher part -->
     </nav>
 </header>
